@@ -2,9 +2,8 @@ package com.theoplayer.android.decoderselector
 
 import android.os.Build
 import com.theoplayer.android.api.settings.DecoderType
-import org.junit.Test
-
 import org.junit.Assert.*
+import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.util.ReflectionHelpers
@@ -18,6 +17,18 @@ import org.robolectric.util.ReflectionHelpers
 class ExternalDecoderSelectionHelperTest {
 
     private val decoderSelectionHelper = ExternalDecoderSelectionHelper()
+
+    @Test
+    fun tcl06_isHandledInternallyByTHEOplayer() {
+        // TCL Smart TV (32S5201X2)
+        //TODO: test to make sure that the ExternalDecoderSelectionHelper doesn't override the default behavior
+    }
+
+    @Test
+    fun randomDevice_withRandomDecoder_isDecoderSelectionCallingSuper_andReturnUsableDecoder() {
+        ReflectionHelpers.setStaticField(Build::class.java, "PRODUCT", "randomDevice")
+        assertTrue(decoderSelectionHelper.shouldUseDecoder(DecoderType.VIDEO, "randomDecoder", null))
+    }
     @Test
     fun xiaomiM1_isDecoderSelectionFixed() {
         ReflectionHelpers.setStaticField(Build::class.java, "PRODUCT", "tissot")
