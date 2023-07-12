@@ -36,9 +36,14 @@ android {
 
 dependencies {
 
+    //implementation
     implementation 'androidx.core:core-ktx:1.7.0'
     // compileOnly to access to API, but the main application needs to include THEOplayer dependency
     compileOnly 'com.theoplayer.theoplayer-sdk-android:core:5.6.+'
+
+    //tests
     testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.robolectric:robolectric:4.9'
+    testImplementation 'com.theoplayer.theoplayer-sdk-android:core:5.6.+'
 
 }
