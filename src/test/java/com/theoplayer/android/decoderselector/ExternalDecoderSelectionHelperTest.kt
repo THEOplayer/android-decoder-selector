@@ -29,9 +29,16 @@ class ExternalDecoderSelectionHelperTest {
         ReflectionHelpers.setStaticField(Build::class.java, "PRODUCT", "randomDevice")
         assertTrue(decoderSelectionHelper.shouldUseDecoder(DecoderType.VIDEO, "randomDecoder", null))
     }
+
     @Test
-    fun xiaomiM1_isDecoderSelectionFixed() {
+    fun randomDevice_withRandomDecoder_isSecureExtensionWorkaroundCallingSuper() {
+        ReflectionHelpers.setStaticField(Build::class.java, "PRODUCT", "randomDevice")
+        assertFalse(decoderSelectionHelper.shouldApplySecureExtensionWorkaround(DecoderType.VIDEO, "randomDecoder", null))
+    }
+
+    @Test
+    fun xiaomiM1_isSecureExtensionWorkaroundApplied() {
         ReflectionHelpers.setStaticField(Build::class.java, "PRODUCT", "tissot")
-        assertFalse(decoderSelectionHelper.shouldUseDecoder(DecoderType.VIDEO, "OMX.qcom.video.decoder.avc", null))
+        assertTrue(decoderSelectionHelper.shouldApplySecureExtensionWorkaround(DecoderType.VIDEO, "OMX.qcom.video.decoder.avc", null))
     }
 }
