@@ -110,12 +110,26 @@ If you found a device with a weirdly-acting decoder and you could manage to fix 
 
 
 ### Where to find the selected decoder?
+
+#### Option 1
+
 In the gathered device (crash) logs you should see a log line like:
 ```java
 THEO_VideoDecoder, Decoder created successfully with name: OMX.MS.AVC.Decoder security: true,  Mime: video/mp4
 ```
 
 In this case `OMX.MS.AVC.Decoder` was the used decoder, which maybe causes the issues.
+
+#### Option 2
+
+THEOplayer provides the [PlaybackSettings.getDecoderName(decoderType, mimeType, isSecure)](https://docs.theoplayer.com/api-reference/android/com/theoplayer/android/api/settings/PlaybackSettings.html#getDecoderName(DecoderType,String,boolean))
+API that returns the decoder name that would be used given the decoder type, mime type and whether the media is DRM protected or not.
+
+```java
+String decoderName = THEOplayerGlobal.getSharedInstance(this).getPlaybackSettings().getDecoderName(DecoderType.VIDEO, "video/mp4", true);
+```
+
+Given the parameters above, the API would return the same decoder name as Option 1: `OMX.MS.AVC.Decoder`
 
 ### How to contribute?
 1. Fork the project and add the new decoder exclusion into 
